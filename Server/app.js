@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
-const PORT = 9000;
+require("dotenv").config();
+const PORT = process.env.PORT || 9000;
 const userRouter = require("./controller/user");
 var createError = require('http-errors')
+
 
 
 app.use(express.json());
