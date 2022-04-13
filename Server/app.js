@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+require("./db.connection");
 const PORT = process.env.PORT || 9000;
 const userRouter = require("./controller/user");
 var createError = require('http-errors')
