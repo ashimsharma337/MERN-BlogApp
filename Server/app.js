@@ -6,7 +6,23 @@ const PORT = process.env.PORT || 9000;
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 const postRouter = require("./routes/post");
+const categoryRouter = require("./routes/category");
 var createError = require('http-errors');
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "images")
+    }, filename: (req, file, cb) => {
+        cb(null, req.body.name);
+    }
+});
+
+const upload = multer({storage: storage});
+
+app.post("/upload", upload.single("file"), (req, res) => {
+    res.status(200).json("File has been uploaded");
+})
 
 
 
@@ -16,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", userRouter);
 app.use("/", authRouter);
 app.use("/", postRouter);
+app.use("/", categoryRouter);
 
 // For 404 errors
 app.use(function (req, res, next) {
