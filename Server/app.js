@@ -5,7 +5,8 @@ require("./db.connection");
 const PORT = process.env.PORT || 9000;
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
-var createError = require('http-errors')
+const postRouter = require("./routes/post");
+var createError = require('http-errors');
 
 
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", userRouter);
 app.use("/", authRouter);
+app.use("/", postRouter);
 
 // For 404 errors
 app.use(function (req, res, next) {

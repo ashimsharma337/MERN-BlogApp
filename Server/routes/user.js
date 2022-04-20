@@ -3,9 +3,16 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const bcrypt = require("bcryptjs");
 
+// GET ALL USER
+router.get("/users", async (req, res) => {
+    let allUser = await User.find();
+    res.status(200).json({
+        allUser
+    })
+})
 
 // UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/users/:id", async (req, res) => {
      if(req.body.userId === req.params.id) {
          if(req.body.password) {
            const salt = await bcrypt.genSalt(10);
@@ -29,7 +36,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
     if(req.body.userId === req.params.id) {
      try {
            const user = await User.findById(req.params.id);
@@ -49,8 +56,8 @@ router.delete("/:id", async (req, res) => {
    }
 });
 
-// GET USER 
-router.get("/:id", async (req, res) => {
+// GET USER BY ID 
+router.get("/users/:id", async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
         const { password, ...others } = user._doc;
