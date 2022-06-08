@@ -1,16 +1,33 @@
 import "../singlePost/singlePost.css";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function SinglePost() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+   const getPost = async () => {
+     const res = await axios.get("/posts/"+path);
+     setPost(res.data);
+   }
+   getPost();
+  }, [path]);
+
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-          <img 
-           className="singlePostImg"
-           src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-           alt=""  
-          />
+          {post.photo && (
+             <img 
+               className="singlePostImg"
+               src={post.photo}
+               alt=""  
+             />
+          )}
           <h1 className="singlePostTitle">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              {post.title}
               <div className="singlePostEdit">
               <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
               <i className="singlePostIcon fa-solid fa-trash-can"></i>
@@ -18,29 +35,14 @@ export default function SinglePost() {
           </h1>
           <div className="singlePostInfo">
               <span className="singlePostAuthor">
-                  Author: <b>Ashim</b>
+                  Author: <b>{post.username}</b>
               </span>
               <span className="singlePostDate">
-                  1 hour ago
+                  {new Date(post.createdAt).toDateString()}
               </span>
           </div>
           <p className="singlePostDesc">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-              Vitae voluptate similique minus, obcaecati pariatur repellendus 
-              omnis blanditiis voluptatem error sapiente veritatis labore 
-              alias tempore voluptatum? In officiis officia pariatur! Vitae.
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-              Vitae voluptate similique minus, obcaecati pariatur repellendu
-              omnis blanditiis voluptatem error sapiente veritatis labore 
-              alias tempore voluptatum? In officiis officia pariatur! Vitae.
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-              Vitae voluptate similique minus, obcaecati pariatur repellendu
-              omnis blanditiis voluptatem error sapiente veritatis labore 
-              alias tempore voluptatum? In officiis officia pariatur! Vitae.
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-              Vitae voluptate similique minus, obcaecati pariatur repellendu
-              omnis blanditiis voluptatem error sapiente veritatis labore 
-              alias tempore voluptatum? In officiis officia pariatur! Vitae.
+            {post.desc}
           </p>
       </div>
     </div>

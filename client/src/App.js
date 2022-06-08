@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 function App() {
-  const user = false;
+  const user = true;
   return (
     <Router>
       <Topbar/>
@@ -19,7 +19,7 @@ function App() {
         <Route path="/login" element={user ? <Home/> : <Login/>} />
         <Route path="/write" element={user ? <Write/> : <Register/>} />
         <Route path="/settings" element={user ? <Settings/> :<Register/>} />
-        <Route path="/post/:postId" element={<Single/>} />
+        <Route path="/posts/:postId" element={<Single/>} />
       </Routes>
     </Router>
   );
