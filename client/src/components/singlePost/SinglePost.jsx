@@ -11,12 +11,17 @@ export default function SinglePost() {
   const [post, setPost] = useState({});
   const PF = "http://localhost:9000/images/";
   const { user } = useContext(Context);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [updateMode, setUpdateMode] = useState(false);
 
 
   useEffect(() => {
    const getPost = async () => {
      const res = await axios.get("/posts/"+path);
      setPost(res.data);
+     setTitle(res.data.title);
+     setDesc(res.data.desc);
    }
    getPost();
   }, [path]);
@@ -32,6 +37,21 @@ export default function SinglePost() {
     }
   }
 
+  const handleUpdate = async(e) => {
+    try{
+      await axios.put(`/posts/${post._id}`, 
+      { 
+        username: user.username, 
+        title, 
+        desc 
+      });
+      //window.location.reload();
+      setUpdateMode(false);
+   } catch (err) {
+     console.log(err);
+   }
+  }
+
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
@@ -41,16 +61,18 @@ export default function SinglePost() {
                src={PF + post.photo}
                alt=""  
              />
+          )}{
+            updateMode ? <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}className="singlePostTitleInput" autoFocus/> : (
+              <h1 className="singlePostTitle">
+                  {title}
+                  {post.username === user?.username && (
+                    <div className="singlePostEdit">
+                      <i className="singlePostIcon fa-solid fa-pen-to-square" onClick={() => setUpdateMode(true)}></i>
+                      <i className="singlePostIcon fa-solid fa-trash-can" onClick={handleDelete}></i>
+                    </div>
+                  )}
+              </h1>
           )}
-          <h1 className="singlePostTitle">
-              {post.title}
-              {post.username === user?.username && (
-                <div className="singlePostEdit">
-                  <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
-                  <i className="singlePostIcon fa-solid fa-trash-can" onClick={handleDelete}></i>
-                </div>
-              )}
-          </h1>
           <div className="singlePostInfo">
               <span className="singlePostAuthor">
                   Author: 
@@ -62,9 +84,18 @@ export default function SinglePost() {
                   {new Date(post.createdAt).toDateString()}
               </span>
           </div>
-          <p className="singlePostDesc">
-            {post.desc}
-          </p>
+          {updateMode ? (
+          <textarea className="singlePostDescInput" value={desc} onChange={(e) => setDesc(e.target.value)}/> 
+          ) : (
+            <p className="singlePostDesc">
+            {desc}
+            </p>
+          )}
+          {updateMode && (
+            <button className="singlePostButton" onClick={handleUpdate}>
+              Update
+            </button>
+          )}
       </div>
     </div>
   )
