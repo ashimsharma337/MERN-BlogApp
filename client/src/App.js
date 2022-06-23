@@ -8,6 +8,7 @@ import Register from "./components/pages/register/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Context } from "./context/Context";
 import { useContext } from "react";
+import About from "./components/pages/about/About";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Topbar/>
       <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/about" element={<About/>} />
         <Route path="/register" element={user ? <Home/> : <Register/>} />
         <Route path="/login" element={user ? <Home/> : <Login/>} />
         <Route path="/write" element={user ? <Write/> : <Register/>} />
