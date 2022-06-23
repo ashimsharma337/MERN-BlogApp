@@ -11,7 +11,7 @@ router.post("/category", async (req, res) => {
     }
 });
 
-router.get("/category", async (req, res) => {
+router.get("/categories", async (req, res) => {
     const newCat = new Category(req.body);
     try {
         const cats = await Category.find();

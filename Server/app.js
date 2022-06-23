@@ -9,11 +9,15 @@ const postRouter = require("./routes/post");
 const categoryRouter = require("./routes/category");
 var createError = require('http-errors');
 const multer = require("multer");
+const path = require("path");
+
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "images")
-    }, filename: (req, file, cb) => {
+    }, 
+    filename: (req, file, cb) => {
         cb(null, req.body.name);
     }
 });
@@ -31,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", userRouter);
 app.use("/", authRouter);
-app.use("/", postRouter);
+app.use("/posts", postRouter);
 app.use("/", categoryRouter);
 
 // For 404 errors
