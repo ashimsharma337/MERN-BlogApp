@@ -52,7 +52,7 @@ app.use(function(err, req, res, next) {
   });
 
 
-app.listen(PORT, (err, succ) => {
+app.listen(process.env.PORT || 9000, (err, succ) => {
     if(err){
         console.log("Error: ", err);
     } else {
