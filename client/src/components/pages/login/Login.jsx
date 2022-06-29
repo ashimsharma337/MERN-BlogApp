@@ -14,13 +14,14 @@ export default function Login() {
     e.preventDefault();
     dispatch({type: "LOGIN_START"});
     try{
-      const res = await axios.post("/auth/login", {
+      const res = await axios.post("https://mern-blog-api.herokuapp.com/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       })
       dispatch({ type:"LOGIN_SUCCESS", payload: res.data })
     }catch(err){
-      dispatch({ type: "LOGIN_FAILURE" })
+      dispatch({ type: "LOGIN_FAILURE" });
+      alert("Invalid Credentials!!!")
     }
   }
   return (
@@ -37,7 +38,7 @@ export default function Login() {
           <label>Password</label>
           <input 
             className="loginInput" 
-            type="text" 
+            type="password" 
             placeholder="Enter your password....." 
             ref={passwordRef}
           />

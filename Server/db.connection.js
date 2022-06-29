@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-const DataBase = process.env.DB_URL;
+const DataBase = "Your mongo atlas url";
 
 mongoose.connect(DataBase)
 .then((success) => {

@@ -5,7 +5,7 @@ import { Context } from "../../context/Context"
 
 function Topbar() {
    const { user, dispatch } = useContext(Context);
-   const PF = "http://localhost:9000/images/";
+   const PF = "https://mern-blog-api.herokuapp.com/images/";
 
    const handleLogout = () => {
       dispatch({type: "LOGOUT"});

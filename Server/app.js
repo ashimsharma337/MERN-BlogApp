@@ -10,6 +10,9 @@ const categoryRouter = require("./routes/category");
 var createError = require('http-errors');
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
+
+app.use(cors());
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
 

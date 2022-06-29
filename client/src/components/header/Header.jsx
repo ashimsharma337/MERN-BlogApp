@@ -8,8 +8,8 @@ export default function Header() {
           <span className="headerTitleLg">Blog</span>
         </div>
         <img className="headerImg"
-        src="https://images6.alphacoders.com/750/750966.jpg"
-        alt="beach"
+        src="https://optimizedude.com/wp-content/uploads/2015/02/Cool-Twitter-Header-2.jpg"
+        alt="blog"
         />
     </div>
   )

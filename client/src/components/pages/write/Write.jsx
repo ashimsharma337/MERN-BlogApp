@@ -23,14 +23,14 @@ export default function Write() {
       data.append("file", file);
       newPost.photo = filename;
       try{
-        await axios.post("/upload", data);
+        await axios.post("https://mern-blog-api.herokuapp.com/upload", data);
       } catch(err) {
         console.log(err);
       }
     }
     try{
-    const res = await axios.post("/posts", newPost);
-    window.location.replace("/post/"+ res.data._id);
+    const res = await axios.post("https://mern-blog-api.herokuapp.com/posts", newPost);
+    window.location.replace("https://fullstack-mern-blog.herokuapp.com/posts/"+ res.data._id);
     } catch (err){
       console.log(err);
     }
